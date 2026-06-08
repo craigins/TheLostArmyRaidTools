@@ -1,0 +1,13 @@
+# Build artifacts
+*.zip
+
+# Editor / OS cruft
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+Thumbs.db
+
+# WoW client-generated saved variables (don't sync personal in-game state)
+*.bak

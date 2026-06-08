@@ -1,0 +1,13 @@
+## Interface: 20505
+## Title: PackMarker
+## Notes: Raid-lead toolkit -- trash auto-marking, target/icon assignments, and per-boss duty/position assignments. Out of combat marking.
+## Author: craigins
+## Version: 3.0.0
+## SavedVariables: PackMarkerDB
+
+Packs.lua
+MobInfo.lua
+Encounters.lua
+PackMarker.lua
+GUI.lua
+BossAssign.lua
