@@ -9,7 +9,7 @@
 --   BOTTOM: marking + assignment action buttons
 -- Plus a draggable minimap button and `/pmark gui` to toggle it.
 
-local ADDON, ns = ...
+local _, ns = ...
 local API = ns.API
 
 -- Clearing every assignment is destructive and has no undo, so it goes through a

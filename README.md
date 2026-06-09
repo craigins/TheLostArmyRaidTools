@@ -126,6 +126,58 @@ reply per player every 5 seconds so it can't be spammed.
 - `PackMarker.toc` — load order: `Packs`, `MobInfo`, `Encounters`, `PackMarker`, `GUI`, `BossAssign`.
 - `CHANGELOG.md` — version history.
 
+## Syncing with the team (git)
+This addon is shared between the raid team through GitHub:
+**https://github.com/craigins/TheLostArmyRaidTools** (`origin`, branch `main`).
+There is **no in-game import/export** — packs and encounters live in `Packs.lua` / `Encounters.lua`,
+so **git is how we share them**. Whoever edits the data commits and pushes; everyone else pulls.
+
+> **Using Claude Code?** Point it at this section. The whole sync flow is plain git against the
+> `origin` remote above — Claude can run these steps for you.
+
+> ⚠️ **Don't re-create the repo or force-push.** Clone it **once** (below) and from then on only
+> `pull` / `commit` / `push`. Running `git init` fresh and `git push --force` replaces the shared
+> history and silently deletes the other person's work (this has bitten us before). If your Claude
+> offers to "initialize a new repo," stop it — point it here instead.
+
+**Everyday flow:**
+```bash
+# 1. Before you start editing, get the latest:
+git pull
+
+# 2. Make your changes (edit Packs.lua / Encounters.lua, etc.), then:
+git add -A
+git commit -m "Add SSC Morogrim trash packs"
+
+# 3. Share them:
+git push
+```
+
+**First-time setup on a new machine (do this ONCE):**
+```bash
+git clone https://github.com/craigins/TheLostArmyRaidTools.git
+```
+Cloning into your `Interface\AddOns\` folder drops a ready-to-run `PackMarker` folder there (the
+repo root *is* the addon). Authenticate either with the GitHub CLI (`gh auth login`) or a personal
+access token when git prompts for a password — GitHub no longer accepts account passwords.
+
+**If `git push` is rejected** ("updates were rejected because the remote contains work you do not
+have"), the other person pushed first. **Pull, then push** — never force:
+```bash
+git pull        # merges their commits with yours
+git push
+```
+If the same lines were edited on both sides, git marks a **conflict** in the file (look for
+`<<<<<<<` / `=======` / `>>>>>>>`); resolve by keeping both entries, then `git add <file> &&
+git commit`. Because packs and encounters are separate entries in a Lua table, conflicts are rare
+and easy to merge — usually you just keep both blocks. (This is a good moment to ask Claude Code.)
+
+**Tips to avoid friction:**
+- `git pull` *before* each editing session and `git push` right after, so neither of you drifts far.
+- Keep commits small and focused ("add X packs") — easier to read and to merge.
+- Optionally lint before committing: `luacheck *.lua` (the repo ships a `.luacheckrc`). A quick
+  syntax check is `luac5.1 -p Packs.lua`.
+
 ## Adding / editing expansions, raids & packs
 Edit the `ns.EXPANSIONS` table in `Packs.lua`. The tree is **expansion → raid → section → pack**.
 A raid holds its packs either grouped into **sections** (e.g. one per boss wing) or listed flat

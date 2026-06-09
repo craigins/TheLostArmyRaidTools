@@ -4,7 +4,7 @@
 -- class/role, lets you override by hand, then whispers / announces / displays them.
 -- Reuses the building blocks shared by GUI.lua (ns.MakeList, ns.BuildRoster).
 
-local ADDON, ns = ...
+local _, ns = ...
 
 local function Print(msg)
     DEFAULT_CHAT_FRAME:AddMessage("|cff66ccffPackMarker:|r " .. tostring(msg))
